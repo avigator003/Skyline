@@ -1,0 +1,234 @@
+{{> _home_header}}
+
+<body>
+
+    <div class="sequence">
+
+        <div class="seq-preloader">
+            <svg width="39" height="16" viewBox="0 0 39 16" xmlns="http://www.w3.org/2000/svg"
+                class="seq-preload-indicator">
+                <g fill="#F96D38">
+                    <path class="seq-preload-circle seq-preload-circle-1"
+                        d="M3.999 12.012c2.209 0 3.999-1.791 3.999-3.999s-1.79-3.999-3.999-3.999-3.999 1.791-3.999 3.999 1.79 3.999 3.999 3.999z" />
+                    <path class="seq-preload-circle seq-preload-circle-2"
+                        d="M15.996 13.468c3.018 0 5.465-2.447 5.465-5.466 0-3.018-2.447-5.465-5.465-5.465-3.019 0-5.466 2.447-5.466 5.465 0 3.019 2.447 5.466 5.466 5.466z" />
+                    <path class="seq-preload-circle seq-preload-circle-3"
+                        d="M31.322 15.334c4.049 0 7.332-3.282 7.332-7.332 0-4.049-3.282-7.332-7.332-7.332s-7.332 3.283-7.332 7.332c0 4.05 3.283 7.332 7.332 7.332z" />
+                </g>
+            </svg>
+        </div>
+
+    </div>
+
+
+
+    <div class="slides">
+      
+        <div class="slide">
+            <div class="content third-content" id="packageId">
+                <div class="container-fluid">
+                      <h2 style="padding:15px
+                                     border-radius:15px;margin-left:330px">OTP VERIFICATION</h2>
+                    <div class="row">
+                      <div class="second-section">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="left-image">
+                                            <img src="{{this.element.filepath}}" alt="second service"  style="height:150px;object-fit:contain;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="right-content">
+                                            <h2>{{this.element.name}} </h2>
+                                            <p>{{this.element.remarks}}</p>
+                                            <p>Number of Coupons : {{this.element.quantity}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="second-section">
+                            <div class="container-fluid">
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form >
+                                         <div class="right-content" id="packageInput">
+                                           <input  id="otp" type="number" name="otp"
+                                              class="package_input">
+                                                <div class="main-btn" style="margin-left:70px">
+                                                <input type="button" id="verify" value="Verify OTP"  onclick="verifyOtp('{{this.voucherId}}')" style="border:none;outline:none;background:transparent">
+                                            </div>
+
+                                     
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+      
+
+
+
+    </div>
+
+    <div class="footer" >
+        <div class="content" style="margin-left:-200px">
+            <p>Copyright &copy; 2020 Company Name . Template: <a rel="nofollow"
+                    href="https://templatemo.com/tm-512-moonlight">Skyline</a></p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/datepicker.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $("main-btn").click(function () {
+                $.post("/api/", function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+            });
+            // navigation click actions 
+            $('.scroll-link').on('click', function (event) {
+                event.preventDefault();
+                var sectionID = $(this).attr("data-id");
+                scrollToID('#' + sectionID, 750);
+            });
+            // scroll to top action
+            $('.scroll-top').on('click', function (event) {
+                event.preventDefault();
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+            // mobile nav toggle
+            $('#nav-toggle').on('click', function (event) {
+                event.preventDefault();
+                $('#main-nav').toggleClass("open");
+            });
+        });
+        // scroll function
+        function scrollToID(id, speed) {
+            var offSet = 0;
+            var targetOffset = $(id).offset().top - offSet;
+            var mainNav = $('#main-nav');
+            $('html,body').animate({ scrollTop: targetOffset }, speed);
+            if (mainNav.hasClass("open")) {
+                mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+                mainNav.removeClass("open");
+            }
+        }
+        if (typeof console === "undefined") {
+            console = {
+                log: function () { }
+            };
+        }
+
+        var sitePlusMinus = function () {
+            $('.js-btn-minus').on('click', function (e) {
+                e.preventDefault();
+                if ($(this).closest('.input-group').find('.form-control').val() != 0) {
+                    $(this).closest('.input-group').find('.form-control').val(parseInt($(this).closest('.input-group').find('.form-control').val()) - 1);
+                } else {
+                    $(this).closest('.input-group').find('.form-control').val(parseInt(0));
+                }
+            });
+            $('.js-btn-plus').on('click', function (e) {
+                e.preventDefault();
+                $(this).closest('.input-group').find('.form-control').val(parseInt($(this).closest('.input-group').find('.form-control').val()) + 1);
+            });
+        };
+        sitePlusMinus();
+
+
+
+    </script>
+
+    <script>
+
+    function verifyOtp(id){
+        var otp = $('#otp').val()
+        console.log("gnj",otp)
+        $.post(`/api/user/verify_otp/${id}`,{otp:otp}, function(data){
+            
+            console.log("data",data)
+
+
+         if(data!="Wrong Otp")
+            window.location.href = 'http://65.1.131.197:3000/home'
+            else{
+             swal({
+        icon:'success',
+        title:"Wrong OTP",
+         })
+        }
+ 
+        });
+        
+}
+</script>
+    <style>
+        .btn {
+            text-transform: uppercase;
+            position: relative;
+            -webkit-transition: 0.2s all ease-in-out !important;
+            -o-transition: 0.2s all ease-in-out !important;
+            transition: 0.2s all ease-in-out !important;
+            top: 0;
+            letter-spacing: .05em;
+        }
+
+        .btn:hover,
+        .btn:active,
+        .btn:focus {
+            outline: none;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+        }
+
+        .btn.btn-secondary {
+            background-color: #e6e7e9;
+            border-color: #e6e7e9;
+            color: #000;
+        }
+
+        .btn.btn-sm {
+            font-size: 14px !important;
+            padding: 10px 20px !important;
+        }
+
+        .btn.btn-primary {
+            font-size: 17px;
+            font-weight: 300;
+            letter-spacing: .2em;
+        }
+
+        .btn:hover {
+            -webkit-box-shadow: 0 5px 20px -7px rgba(0, 0, 0, 0.9) !important;
+            box-shadow: 0 5px 20px -7px rgba(0, 0, 0, 0.9) !important;
+            top: -2px;
+        }
+    </style>
+</body>
+
+</html>

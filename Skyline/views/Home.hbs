@@ -1,0 +1,314 @@
+{{> _home_header}}
+
+<body>
+     <div class="sequence">
+        <div class="seq-preloader">
+            <svg width="39" height="16" viewBox="0 0 39 16" xmlns="http://www.w3.org/2000/svg"
+                class="seq-preload-indicator">
+                <g fill="#F96D38">
+                    <path class="seq-preload-circle seq-preload-circle-1"
+                        d="M3.999 12.012c2.209 0 3.999-1.791 3.999-3.999s-1.79-3.999-3.999-3.999-3.999 1.791-3.999 3.999 1.79 3.999 3.999 3.999z" />
+                    <path class="seq-preload-circle seq-preload-circle-2"
+                        d="M15.996 13.468c3.018 0 5.465-2.447 5.465-5.466 0-3.018-2.447-5.465-5.465-5.465-3.019 0-5.466 2.447-5.466 5.465 0 3.019 2.447 5.466 5.466 5.466z" />
+                    <path class="seq-preload-circle seq-preload-circle-3"
+                        d="M31.322 15.334c4.049 0 7.332-3.282 7.332-7.332 0-4.049-3.282-7.332-7.332-7.332s-7.332 3.283-7.332 7.332c0 4.05 3.283 7.332 7.332 7.332z" />
+                </g>
+            </svg>
+        </div>
+    </div>
+
+
+    <nav>
+        <div class="logo">
+            <img src="https://cdn3.shopvii.com/759/605/Skyline_New_Logo.svg" alt="" style="position:relative;top:-30px">
+        </div>
+        <div class="mini-logo">
+            <img src="https://cdn3.shopvii.com/759/605/Skyline_New_Logo.svg" alt="">
+        </div>
+        <ul>
+            {{#each package}}
+            <li><a href="#{{this.id}}"><i class="fa fa-folder"></i> <em>{{this.package.packageName}}</em></a></li>
+            {{/each}}
+           <li><a href="#3"><i class="fa fa-folder"></i> <em>Terms and Conditions</em></a></li>
+        
+            {{#ifCond this.user null}}
+            
+            <li><a href="#4"><i class="fa fa-user"></i> <em>Your Packages</em></a></li>
+            <li><a href="#5"><i class="fa fa-folder"></i> <em>All Packages</em></a></li>
+            <li>
+            <a  onclick=logout()>
+            <i class="fa fa-download" style=" transform: rotate(270deg);"></i> 
+            <em>Logout</em></a>
+            </li>
+           
+            {{else}}
+            <li><a href="#4"><i class="fa fa-folder"></i> <em>All Packages</em></a></li>
+            <li>
+            <a  onclick=login()>
+            <i class="fa fa-download" style=" transform: rotate(90deg);"></i> 
+            <em>Login/Register</em></a>
+            </li>
+            {{/ifCond}}
+    </ul>
+    </nav>
+
+
+
+
+
+
+
+
+       
+
+
+
+
+
+    <div class="slides">
+
+
+        {{#each package}}
+        <div class="slide" id="{{this.id}}">
+            <div class="content third-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="second-section">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="left-image">
+                                            <img src="{{this.package.filepath}}" alt="second service" style="height:300px;object-fit:cover">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="right-content">
+                                            <h2 >{{this.package.packageName}}</h2>
+                                            <p >{{this.package.packageRemarks}}</p>
+                                              <form id="buy-form">                                           
+                                                  <div class="main-btn">
+                                                  <input type="button" value="BUY" onclick="submitBuy('{{this.package._id}}')" 
+                                                    style="border:none;outline:none;background:transparent;width:200px">
+                                                   </div>
+                                              </form>
+                                            </div>
+                                         </div>
+                                        </div>
+                                       </div>
+                                     </div>
+
+
+
+                        <div class="second-section">
+                            <div class="container-fluid">
+                                <h2>Package Details</h2>
+                                <div class="row">
+                                    {{#each this.package.Element}}
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="item">
+                                            <div class="thumb">
+                                             <a href="{{this.element.filepath}}" data-lightbox="image-1">
+                                                <div class="hover-effect">
+                                                     <div class="hover-content">
+                                                        <h2>{{this.element.name}}</h2>
+                                                        <p>{{this.element.remarks}}</p>
+                                                    </div>
+                                                </div>
+                                                
+                                                </a>
+                                                <div class="image">
+                                                    <img src="{{this.element.filepath}}" class="elementImage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+              {{/each}}
+
+
+
+
+                <div class="slide" id="3">
+                  <div class="content fourth-content">
+                    <div class="container-fluid">
+                    <p style="font-size:30px;font-weight:bold;color:white;text-decoration: underline;
+                    text-transform: uppercase;margin-bottom:45px">Terms and Conditions</p>
+                    {{#each terms}}
+                    <h4 style="font-size:15px;font-weight:bold;color:white;
+                    text-align:left;margin-bottom:20px">
+                    <span style="font-size:15px;font-weight:bold;color:white;margin-right:10px;">
+                     {{this.index}}.</span>
+                     {{this.terms}}</h4>
+                    {{/each}}
+                   </div>
+                  </div>
+                 </div>
+
+
+
+
+
+          <div class="slide" id="4">
+             <div class="content fourth-content">
+                    <div class="container-fluid">
+                          <div class="row">
+                            {{#each userpackage}}
+                            <div class="col-md-4 col-sm-6"  onclick="window.location.href = 'http://65.1.131.197:3000/api/user/show_user_package/{{this.id}}';">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <div class="hover-effect">
+                                            <div class="hover-content">
+                                                <h2>{{this.package.packageName}}</h2>
+                                               <p>{{this.package.packageRemarks}}</p>
+                                            </div>
+                                        </div>
+                                        </a>
+                                        <div class="image">
+                                            <img src="{{this.package.filepath}}" class="elementImage">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+       
+
+
+
+        {{#ifCond this.user null}}
+          <div class="slide" id="5">
+              {{else}}
+                <div class="slide" id="4">
+                 {{/ifCond}}
+                <div class="content fourth-content">
+                    <div class="container-fluid">
+                          <div class="row">
+                            {{#each packages}}
+                            <div class="col-md-4 col-sm-6" onclick="window.location.href = 'http://65.1.131.197:3000/api/package/show_package/{{this._id}}';">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <div class="hover-effect">
+                                            <div class="hover-content">
+                                                <h2>{{this.packageName}}</h2>
+                                               <p>{{this.packageRemarks}}</p>
+                                            </div>
+                                        </div>
+                                        </a>
+                                        <div class="image">
+                                            <img src="{{this.filepath}}" class="elementImage">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </body>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/datepicker.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                 $("main-btn").click(function () {
+                    $.post("/api/", function (data, status) {
+                        alert("Data: " + data + "\nStatus: " + status);
+                    });
+                });
+                // navigation click actions 
+                $('.scroll-link').on('click', function (event) {
+                    event.preventDefault();
+                    var sectionID = $(this).attr("data-id");
+                    scrollToID('#' + sectionID, 750);
+                });
+                // scroll to top action
+                $('.scroll-top').on('click', function (event) {
+                    event.preventDefault();
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                });
+                // mobile nav toggle
+                $('#nav-toggle').on('click', function (event) {
+                    event.preventDefault();
+                    $('#main-nav').toggleClass("open");
+                });
+            });
+            // scroll function
+            function scrollToID(id, speed) {
+                var offSet = 0;
+                var targetOffset = $(id).offset().top - offSet;
+                var mainNav = $('#main-nav');
+                $('html,body').animate({ scrollTop: targetOffset }, speed);
+                if (mainNav.hasClass("open")) {
+                    mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+                    mainNav.removeClass("open");
+                }
+            }
+            if (typeof console === "undefined") {
+                console = {
+                    log: function () { }
+                };
+            }
+
+            var sitePlusMinus = function () {
+                $('.js-btn-minus').on('click', function (e) {
+                    e.preventDefault();
+                    if ($(this).closest('.input-group').find('.form-control').val() != 0) {
+                        $(this).closest('.input-group').find('.form-control').val(parseInt($(this).closest('.input-group').find('.form-control').val()) - 1);
+                    } else {
+                        $(this).closest('.input-group').find('.form-control').val(parseInt(0));
+                    }
+                });
+                $('.js-btn-plus').on('click', function (e) {
+                    e.preventDefault();
+                    $(this).closest('.input-group').find('.form-control').val(parseInt($(this).closest('.input-group').find('.form-control').val()) + 1);
+                });
+            };
+            sitePlusMinus();
+        </script>
+
+
+    <script>
+        function submitBuy(id){
+        $.post(`/api/sellvoucher/sell_voucher_add/${id}`, function(data){
+            
+        swal({
+        icon:'success',
+        title:data,
+         })
+
+        });
+ 
+}
+
+  function logout(){
+        $.get(`/api/user/logout`, function(data){
+           window.location.href="http://65.1.131.197:3000/home"
+
+        });
+}
+
+   function login(){
+           window.location.href="http://65.1.131.197:3000/login"
+                 }
+</script>
+</html>
