@@ -141,7 +141,7 @@ router.get('/package_list', function(req, res){
 
  router.get('/approval', function (req, res) {
 
-    SellVoucher.find({ approved:false}).populate('elementConsumed.element').populate('package')
+    SellVoucher.find({}).populate('elementConsumed.element').populate('package')
     .populate([{path: 'package',populate:{ path: 'Element',populate:{path:'element'}}}])
     .populate("sellTo")
     .exec(async function (err, voucher){
@@ -149,6 +149,7 @@ router.get('/package_list', function(req, res){
          res.status(400).json({ 'success': false, 'message': err });
             
       else{
+          console.log("vocyher",voucher)
         res.render('Package_Approval',{vouchers:voucher,})
           }
         

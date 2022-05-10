@@ -160,7 +160,7 @@
                     <div class="container-fluid">
                           <div class="row">
                             {{#each userpackage}}
-                            <div class="col-md-4 col-sm-6"  onclick="window.location.href = 'http://65.1.131.197:3000/api/user/show_user_package/{{this.id}}';">
+                            <div class="col-md-4 col-sm-6"  onclick="window.location.href = 'http://localhost:3000/api/user/show_user_package/{{this.id}}';">
                                 <div class="item">
                                     <div class="thumb">
                                         <div class="hover-effect">
@@ -195,7 +195,7 @@
                     <div class="container-fluid">
                           <div class="row">
                             {{#each packages}}
-                            <div class="col-md-4 col-sm-6" onclick="window.location.href = 'http://65.1.131.197:3000/api/package/show_package/{{this._id}}';">
+                            <div class="col-md-4 col-sm-6" onclick="window.location.href = 'http://localhost:3000/api/package/show_package/{{this._id}}';">
                                 <div class="item">
                                     <div class="thumb">
                                         <div class="hover-effect">
@@ -302,13 +302,13 @@
 
   function logout(){
         $.get(`/api/user/logout`, function(data){
-           window.location.href="http://65.1.131.197:3000/home"
+           window.location.href="http://localhost:3000/home"
 
         });
 }
 
    function login(){
-           window.location.href="http://65.1.131.197:3000/login"
+           window.location.href="http://localhost:3000/login"
                  }
 </script>
 </html>

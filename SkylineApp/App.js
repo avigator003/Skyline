@@ -65,13 +65,22 @@ export default function App(props){
 
  
   const[isLoadingComplete,setIsLoadingComplete]=useState()
-
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+
   useEffect(() => {
     registerForPushNotificationsAsync().then(token =>{
+      Axios({
+      method:"POST",
+      url:"http://65.1.131.197:3000/api/token/token_add",
+      data:{
+         token:token
+      }
+    }).then(response=>{
+       console.log("Token Registered",response)
+     })
         setExpoPushToken(token)}
       );
 
@@ -88,6 +97,8 @@ export default function App(props){
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+
+
 
     if (isLoadingComplete && !props.skipLoadingScreen) {
       return (
@@ -140,6 +151,7 @@ async function schedulePushNotification() {
 }
 
 async function registerForPushNotificationsAsync() {
+  
   let token;
   if (Constants.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -153,19 +165,18 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    AsyncStorage.setItem("token",token)
-    
-    Axios({
-      method:"POST",
-      url:"http://65.1.131.197:3000/api/token/token_add",
-      data:{
-         token:token
-      }
-    }).then(response=>{
-     console.log("Token Registered")
-     })
-    console.log(token);
+    await AsyncStorage.setItem("token",token)
   } else {
     alert('Must use physical device for Push Notifications');
   }
+
+     if(Platform.OS==='android'){
+       Notifications.setNotificationChannelAsync('default',{
+         name:'default',
+         importance:Notifications.AndroidImportance.MAX,
+         vibrationPattern:[0,250,250,250],
+         lightColor:'#FF231F7C'
+       })
+     }
+  return token;
 }

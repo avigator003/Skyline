@@ -7,6 +7,7 @@ import materialTheme from '../constants/Theme';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Updates from 'expo-updates';
+import Axios from 'axios'
 
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
@@ -15,6 +16,7 @@ const LogoutButton = ({isWhite, style, navigation}) => (
   <TouchableOpacity style={[styles.button, style]} onPress={() => {
     AsyncStorage.removeItem('user')
     AsyncStorage.removeItem('email')
+    Axios.get('http://65.1.131.197:3000/api/user/mobile_logout')
     navigation.navigate('Login')
     Updates.reloadAsync()
     }}>

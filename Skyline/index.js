@@ -26,7 +26,7 @@ const SellVoucher = require('./Models/SellVoucher')
 const Terms = require('./Models/Terms')
 const Carousel = require('./Models/Carousel')
 const router = require('./routes/api/user')
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 3000
 
 /* =======================
 EXPRESS CONFIGURATION
@@ -273,7 +273,7 @@ console.log('jfhn')
                  res.render('Terms_and_Conditions.hbs',{terms:JSON.stringify(term[0].terms)})   
                  }
                 }
-                res.render('Terms_and_Conditions.hbs')   
+                // res.render('Terms_and_Conditions.hbs')   
  }
     })
 
@@ -310,10 +310,7 @@ app.get('/package/update/:id', function(req, res){
                 element:element
             });
         }
-    })
-         
-      
-         
+    })   
        
  
         }).catch(err =>{

@@ -28,48 +28,10 @@
             <div class="content third-content" id="packageId">
                 <div class="container-fluid">
                       <h2 style="padding:15px
-                                     border-radius:15px;margin-left:330px">OTP VERIFICATION</h2>
-                    <div class="row">
-                      <div class="second-section">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="left-image">
-                                            <img src="{{this.element.filepath}}" alt="second service"  style="height:150px;object-fit:contain;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="right-content">
-                                            <h2>{{this.element.name}} </h2>
-                                            <p>{{this.element.remarks}}</p>
-                                            <p>Number of Coupons : {{this.element.quantity}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                border-radius:15px;margin-left:220px">OTP is Sent Successfully to your Registered Email</h2>
 
-                        <div class="second-section">
-                            <div class="container-fluid">
-                                
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <form >
-                                         <div class="right-content" id="packageInput">
-                                           <input  id="otp" type="number" name="otp"
-                                              class="package_input">
-                                                <div class="main-btn" style="margin-left:70px">
-                                                <input type="button" id="verify" value="Verify OTP"  onclick="verifyOtp('{{this.voucherId}}')" style="border:none;outline:none;background:transparent">
-                                            </div>
-
-                                     
-                                        </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                   <div class="main-btn" style="margin-left:70px">
+                <input type="button" id="home" value="Go to Home"  onclick="home()" style="border:none;outline:none;background:transparent">
                     </div>
 
                 </div>
@@ -166,25 +128,9 @@
 
     <script>
 
-    function verifyOtp(id){
-        var otp = $('#otp').val()
-        console.log("gnj",otp)
-        $.post(`/api/user/verify_otp/${id}`,{otp:otp}, function(data){
-            
-            console.log("data",data)
+    function home(){
+       window.location.href = "http://localhost:3000/home";
 
-
-         if(data!="Wrong Otp")
-            window.location.href = 'http://65.1.131.197:3000/home'
-            else{
-             swal({
-        icon:'success',
-        title:"Wrong OTP",
-         })
-        }
- 
-        });
-        
 }
 </script>
     <style>

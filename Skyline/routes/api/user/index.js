@@ -36,8 +36,9 @@ var storage = multer.diskStorage({
 var upload = multer({
     storage: storage,
     fileFilter: function (req, file, callback) {
-    //    var ext = path.extname(file?.originalname)
-    var ext;
+        var ext;
+        console.log(file)
+        if (file) ext = path.extname(file.originalname)
         if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg' && ext !== '.pdf') {
             req.fileValidationError = "Forbidden extension";
             return callback(null, false, req.fileValidationError);
@@ -56,8 +57,9 @@ var userStorage = multer.diskStorage({
         cb(null, 'public/uploads/user')
     },
     filename: (req, file, cb) => {
-
-     //   cb(null, Date.now() + '-' + file?.originalname)
+        if (file) cb(null, Date.now() + '-' + file.originalname)
+        
+      
     }
 });
 
@@ -141,7 +143,8 @@ router.post('/register', upload.single('userPic'), (req, res, next) => {
         if (user) {
             throw new Error('Email Address exists')
         } else {
-         //   var filepath = req?.file?.path
+            var filepath = "";
+            if (req && req.file) filepath = req.file.path
 
 
             return User.create(password,
@@ -248,6 +251,7 @@ router.post('/login', function (req, res, next) {
 
                 req.session.user = user;
                 localStorage.setItem('user', JSON.stringify(user))
+               
                 //  localStorage.removeItem('user')
                 // create a promise that generates jwt asynchronously
                 const p = new Promise((resolve, reject) => {
@@ -426,7 +430,7 @@ router.post('/send_otp/:id', (req, res) => {
                     }
                 }
 
-                SellVoucher.update({ _id: voucherid }, vouchers, function (err, vouchers) {
+                  SellVoucher.update({ _id: voucherid }, vouchers, function (err, vouchers) {
                     if (err) {
                         console.log(err)
                     }
@@ -479,8 +483,8 @@ router.post('/send_otp/:id', (req, res) => {
                 console.log(err)
             else {
                 ele.quantity = qu
-                res.render('Otp_Verification', { element: ele, sellvoucherid: sellvocuherid })
-            }
+              
+                }
         })
 
 
@@ -537,6 +541,12 @@ router.post('/verify_otp/:id', (req, res) => {
 router.get('/logout', function (req, res) {
     localStorage.removeItem('user')
     res.redirect('/home')
+});
+
+
+router.get('/mobile_logout', function (req, res) {
+    localStorage.removeItem('mobileUser')
+   
 });
 
 
@@ -724,7 +734,8 @@ router.post('/mobile_login', function (req, res, next) {
                 if (user.password == crypto.createHmac('sha1', config.secret)
                     .update(req.body.password)
                     .digest('base64')) {
-                    res.json({
+                         localStorage.setItem('mobileUser', JSON.stringify(user))
+                         res.json({
                         'success': true,
                         'id': user._id,
                         'email': user.emailAddress,
@@ -741,7 +752,6 @@ router.post('/mobile_login', function (req, res, next) {
 
 
 router.post('/mobile_send_otp/:id', (req, res) => {
-     console.log("token",req.body)
     const id = req.params.id
     const sellvocuherid = req.body.sellvoucherid
     var quantity = req.body.quantity
@@ -783,12 +793,35 @@ router.post('/mobile_send_otp/:id', (req, res) => {
                     console.log(err)
                 }
                 else {
-                    console.log(":selling",token,otp)
                     send(otp,token)
                     res.json({ message: "OTP Sent Successfully" })
                 }
             })
-        }
+
+
+            
+            const user = JSON.parse(localStorage.getItem('mobileUser'))
+            var userEmail = user.emailAddress;
+            var emailText = `<p>Hi ${user.name} .Your OTP is ${otp}`
+        
+        
+        
+            //   emailText += '<p><a href="'+url+'">click here</a>';
+            var mailOptions = {
+                from: 'ravi.softsolutions@gmail.com',
+                to: userEmail,
+                subject: 'SKYLINE | OTP for Consuming',
+                html: emailText
+            };
+        
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    res.send({ text: "Failed to Deliver OTP . Please Try Again!!" })
+                    console.log(error);
+                    //   res.json({ 'success': false, 'message': error });
+                }
+           });
+          }
 
     })
 })
@@ -809,7 +842,6 @@ async function schedulePushNotification() {
 
 
   async function send(body,token){
-      console.log("sending",body)
    
     const message={
         to:token,

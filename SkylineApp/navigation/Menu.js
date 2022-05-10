@@ -26,7 +26,6 @@ function CustomDrawerContent({
 
     async function fetchMyUser() {
      const user= await AsyncStorage.getItem('email')
-     console.log("menu",user)
       setUser(user)
       if(user)
       setScreens([

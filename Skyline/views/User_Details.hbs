@@ -255,7 +255,7 @@
 
                     {{#if user.dateofbirth }}
                     <div class="form-group">
-                      <label for="dateofbirth">Email Address</label>
+                      <label for="dateofbirth">Date of Birth</label>
                       <input type="text" name="dateofbirth" value={{user.dateofbirth}} class="form-control"
                         id="dateofbirth" placeholder="Date Of Birth">
                     </div>
@@ -281,7 +281,7 @@
                     {{#each voucher}}
 
                     <div class="packageCard">
-                      <h3>{{this.package.packageName}} {{this._id}}</h3>
+                      <h3>{{this.package.packageName}}</h3>
                       <p>{{this.package.packageRemarks}}</p>
                       <template x-for="(element, index) in Element[{{@index}}]" :key="index">
                         <div class="row" style="margin-bottom:20px;">
